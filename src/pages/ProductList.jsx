@@ -6,6 +6,7 @@ const ProductList = () => {
   const userRole=localStorage.getItem("role")
   return (
     <>
+    
   {userRole==="seller"?<SellerProductList/>:<BuyerProductList/>}
     </>
   )
