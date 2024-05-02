@@ -1,27 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProductCard from './ProductCard'
 import { useQuery } from '@tanstack/react-query'
 import $axios from '../lib/axios/axios.instance'
-import { Box, Button, CircularProgress } from '@mui/material'
+import { Box, Button, CircularProgress, Pagination } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import SellProductPrompt from './SellProductPrompt'
 import Loader from './Loader'
 
 
 const SellerProductList = () => {
+
+  const [currentPage,setCurrentPage]=useState(1)
   const navigate=useNavigate()
   const { isPending, data } = useQuery({
-    queryKey: ["get-seller-products"],
+    queryKey: ["get-seller-products",currentPage],
     queryFn: async () => {
       return await $axios.post("/product/list/seller", {
-        page: 1,
-        limit: 20,
+        page: currentPage,
+        limit: 1,
       });
     },
   });
 console.log(data)
   const productList = data?.data?.productList;
 // console.log(productList)
+const totalPages=data?.data?.totalPages
 
 
   if (isPending) {
@@ -46,6 +49,7 @@ console.log(data)
       })}
     
     </Box>
+    <Pagination page={currentPage} count={totalPages} color="secondary" onChange={(_,value)=>{setCurrentPage(value)}}/>
    </>
   );
 };

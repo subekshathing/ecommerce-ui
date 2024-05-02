@@ -1,44 +1,52 @@
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import React, { useState } from 'react'
 import $axios from '../lib/axios/axios.instance'
-import { Box, CircularProgress } from '@mui/material'
+import { Box, Pagination } from '@mui/material'
 import ProductCard from './ProductCard'
 import Loader from './Loader'
 
 const BuyerProductList = () => {
+  const [currentPage, setCurrentPage]=useState(1)
 
 //fetch buyer list
 const {isPending, data}=useQuery({
-queryKey:["get-buyer-list"],
+queryKey:["get-buyer-list",currentPage],
   queryFn:async()=>{
     return await $axios.post(`/product/list/buyer`, {
-      page: 1,
-      limit: 9,
+      page: currentPage,
+      limit: 2,
     })
+  
   }
 })
 
-console.log(data)
-
 const productLists=data?.data?.productList
+const totalPages=data?.data?.totalPages
 if(isPending){
   return <Loader/>
 }
 
   return (
+  <>
     <Box   sx={{
       display: "flex",
+      flexDirection:"row",
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
       gap: "3rem",
+      mb:"2rem"
     }}>
       {
       productLists.map((item)=>{
         return <ProductCard key={item._id} {...item}/>
       })
       }
+     
     </Box>
+    <Pagination page={currentPage} count={totalPages} color="secondary" onChange={(_,value)=>{setCurrentPage(value)}} />
+
+  </>
   )
 }
 

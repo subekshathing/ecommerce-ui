@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Badge, Tooltip } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import $axios from "../lib/axios/axios.instance";
 
 const drawerWidth = 240;
@@ -54,7 +54,7 @@ const Header = (props) => {
   const userRole = localStorage.getItem("role");
 
     // get cart item count
-    const { isPending, data } = useQuery({
+    const { data } = useQuery({
       queryKey: ["get-cart-item-count"],
       queryFn: async () => {
         return await $axios.get("/cart/item/count");
@@ -65,10 +65,6 @@ const Header = (props) => {
     },
     
   );
-
-
-    
-  
     const cartItemCount = data?.data?.cartItemCount;
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -94,7 +90,7 @@ const Header = (props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{backgroundColor:"#153448"}}>
+      <AppBar component="nav" sx={{backgroundColor:"purple"}}>
         <Toolbar>
           <IconButton
             color="inherit"

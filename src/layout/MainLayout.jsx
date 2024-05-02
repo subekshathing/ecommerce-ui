@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Header from '../component/Header'
 
 import { Box } from '@mui/material'
+import Footer from '../component/Footer'
 
 const MainLayout = () => {
   return (
@@ -11,8 +12,8 @@ const MainLayout = () => {
       <Box sx={{margin:"3rem 0 0 0" }}>
       <Outlet/>
       </Box>
-       
-    <h3>footer</h3>
+     
+   <Footer/>
     </>
   )
 }

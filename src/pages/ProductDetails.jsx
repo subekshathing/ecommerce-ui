@@ -109,7 +109,7 @@ console.log(data)
           <Typography variant="h6">Free shipping</Typography>
           <Chip
             variant="outlined"
-            color="success"
+            color={productDetails.freeShipping? "success":"error"}
             label={productDetails.freeShipping? "Yes":"No"}
             sx={{ fontSize: "1rem" }}
           />
